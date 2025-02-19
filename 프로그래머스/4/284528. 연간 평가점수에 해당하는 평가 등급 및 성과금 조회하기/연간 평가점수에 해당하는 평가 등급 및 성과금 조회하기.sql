@@ -1,0 +1,27 @@
+# HR_DEPARTMENT 부서 정보 테이블
+# HR_EMPLOYEES 사원 정보 테이블 
+# HR_GRADE 사원 평가 테이블
+WITH grade AS (
+    SELECT
+    EMP_NO, 
+    CASE
+        WHEN AVG(SCORE) >= 96 THEN 'S'
+        WHEN AVG(SCORE) >= 90 THEN 'A'
+        WHEN AVG(SCORE) >= 80 THEN 'B'
+        ELSE 'C'
+    END AS GRADE
+    FROM HR_GRADE
+    GROUP BY EMP_NO
+)
+
+SELECT EMP_NO, EMP_NAME, g.GRADE,
+CASE g.GRADE
+    WHEN 'S' THEN SAL * 0.2
+    WHEN 'A' THEN SAL * 0.15
+    WHEN 'B' THEN SAL * 0.1
+    WHEN 'C' THEN 0
+END AS BONUS
+FROM HR_EMPLOYEES
+LEFT JOIN grade g
+USING (EMP_NO)
+ORDER BY EMP_NO ASC
