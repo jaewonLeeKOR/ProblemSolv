@@ -1,0 +1,5 @@
+SELECT COUNT(*) FISH_COUNT
+FROM FISH_INFO f
+LEFT JOIN FISH_NAME_INFO fn
+USING (fish_type)
+WHERE fn.fish_name = 'BASS' OR fn.fish_name = 'SNAPPER'
